@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Análisis Matemático II — Resumen de Teoría</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
+  <header class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">AMII · Final</div>
+      <h1 class="hero-title">
+        <span class="hero-title-line">Análisis</span>
+        <span class="hero-title-line italic">Matemático II</span>
+      </h1>
+      <p class="hero-subtitle">Resumen completo de teoría · 7 bloques temáticos</p>
+      <nav class="hero-nav">
+        <a href="#dominio">Dominio</a>
+        <a href="#gradiente">Gradiente</a>
+        <a href="#extremos">Extremos</a>
+        <a href="#curvas">Curvas</a>
+        <a href="#campos">Campos</a>
+        <a href="#green">Green</a>
+        <a href="#integrales">Integrales</a>
+      </nav>
+    </div>
+    <div class="hero-scroll-hint">↓ scroll</div>
+  </header>
+
+  <main>
+
+    <!-- ═══ 1. DOMINIO Y CURVAS DE NIVEL ════════════════════════════════ -->
+    <section id="dominio" class="section section--odd">
+      <div class="section-num">01</div>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Dominio &amp; Curvas de Nivel</h2>
+          <p class="section-lead">Funciones vectoriales reales, límites y continuidad en ℝⁿ</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card card--blue">
+            <h3>Función Vectorial Real</h3>
+            <p>Asigna a cada vector del primer espacio un número real en el segundo. El <strong>dominio</strong> es el conjunto de vectores para los cuales existe un número real en el segundo espacio.</p>
+            <div class="formula">Dom f = &#123; (x, y) ∈ ℝ² / condición &#125;</div>
+          </div>
+
+          <div class="card card--teal">
+            <h3>Curvas de Nivel</h3>
+            <p>Se obtienen al intersectar la superficie <em>Z = f(x,y)</em> con planos paralelos al plano XoY (Z = k) y proyectarlas sobre dicho plano.</p>
+            <div class="formula">C<sub>k</sub> = &#123; (x,y) ∈ Dom f / f(x,y) = k &#125;</div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--dark mt">
+          <h3>Límite de una función de dos variables</h3>
+          <div class="formula formula--large">lim<sub>(x,y)→(x₀,y₀)</sub> f(x,y) = L</div>
+          <div class="grid grid-3 mt-sm">
+            <div class="mini-card">
+              <span class="tag tag--blue">Simultáneo</span>
+              <p>Se evalúa directamente. Si existe, es el límite de la función.</p>
+            </div>
+            <div class="mini-card">
+              <span class="tag tag--teal">Sucesivo</span>
+              <p>lim<sub>x→x₀</sub>[lim<sub>y→y₀</sub> f(x,y)] = L. No se indetermina nunca.</p>
+            </div>
+            <div class="mini-card">
+              <span class="tag tag--amber">Radial</span>
+              <p>y = m·x. Útil para demostrar que el límite <strong>no existe</strong> (si cambia con m).</p>
+            </div>
+          </div>
+          <div class="alert alert--info mt-sm">
+            <strong>Clasificación:</strong> Si el límite no existe → discontinuidad esencial. Si existe pero ≠ f(x₀,y₀) → discontinuidad evitable. Si existe e = f(x₀,y₀) → función continua.
+          </div>
+        </div>
+
+        <div class="grid grid-2 mt">
+          <div class="card card--glass">
+            <h3>Continuidad</h3>
+            <p>Una función es continua en (a,b) si:</p>
+            <div class="formula">lim<sub>(x,y)→(a,b)</sub> f(x,y) = f(a,b)</div>
+            <p class="mt-sm">También: si f<sub>xy</sub>(a,b) = f<sub>yx</sub>(a,b) → f es continua.</p>
+          </div>
+          <div class="card card--glass">
+            <h3>Plano Tangente — Función Afín</h3>
+            <p>Plano que contiene las derivadas de las curvas originadas al cortar la superficie con planos paralelos a los ejes, en el punto P₀.</p>
+            <div class="formula">(Z − Z₀) = f<sub>x₀</sub>·(X−X₀) + f<sub>y₀</sub>·(Y−Y₀)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 2. DERIVADAS DIRECCIONALES Y GRADIENTE ═══════════════════════ -->
+    <section id="gradiente" class="section section--even">
+      <div class="section-num">02</div>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Derivadas Direccionales &amp; Gradiente</h2>
+          <p class="section-lead">Jacobiano, diferencial, máximo crecimiento</p>
+        </div>
+
+        <div class="card card--wide card--dark">
+          <h3>Derivada Total — Matriz Jacobiana</h3>
+          <p>Se obtiene derivando cada función del segundo espacio respecto a cada variable del primero.</p>
+          <div class="formula formula--large">
+            f'(X) = J = <span class="matrix">
+              [ ∂f₁/∂x  ∂f₁/∂y ]<br>
+              [ ∂f₂/∂x  ∂f₂/∂y ]
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-2 mt">
+          <div class="card card--blue">
+            <h3>Diferencial de una Función</h3>
+            <p>Aproximación al valor real con pequeño error que crece al alejarse del punto.</p>
+            <div class="formula">df = f'(X) · ΔX</div>
+          </div>
+          <div class="card card--teal">
+            <h3>Incremento Total</h3>
+            <p>Indica qué tan cerca o lejos estamos del valor real de la función.</p>
+            <div class="formula">Δf = f(X₀ + ΔX) − f(X₀)</div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--glass mt">
+          <h3>Derivada Direccional</h3>
+          <p>Pendiente de la recta tangente a una curva generada al cortar la superficie con un plano que contenga al vector <em>v̂</em> (versor unitario).</p>
+          <div class="formula formula--large">df/dv̂ = f'(X₀) · v̂ = ∇f(X₀) · v̂ &nbsp;&nbsp;&nbsp; donde v̂ = v / |v|</div>
+          <div class="alert alert--tip">
+            <strong>Procedimiento:</strong> Evaluar el Jacobiano de la función en el punto y multiplicar por el versor v̂.
+          </div>
+        </div>
+
+        <div class="card card--wide card--accent mt">
+          <h3>⭐ Vector Gradiente — Dirección del Máximo Crecimiento</h3>
+          <div class="formula formula--large formula--white">∇f(X₀) = f'(X₀) = ( f<sub>x</sub>(x,y) , f<sub>y</sub>(x,y) )</div>
+          <div class="grid grid-2 mt-sm">
+            <div class="fact-row"><span class="fact-icon">↑</span><div><strong>Máximo crecimiento:</strong> dirección ∇f(X₀)</div></div>
+            <div class="fact-row"><span class="fact-icon">↓</span><div><strong>Mínimo crecimiento:</strong> dirección −∇f(X₀)</div></div>
+            <div class="fact-row"><span class="fact-icon">+</span><div><strong>Deriv. dir. máxima:</strong> |∇f(X₀)|</div></div>
+            <div class="fact-row"><span class="fact-icon">−</span><div><strong>Deriv. dir. mínima:</strong> −|∇f(X₀)|</div></div>
+            <div class="fact-row span-2"><span class="fact-icon">⊥</span><div>El gradiente es <strong>ortogonal</strong> a la curva de nivel en ese punto.</div></div>
+          </div>
+          <div class="formula mt-sm">|∇f(X₀) · â| ≤ |∇f(X₀)| · |â|  &nbsp;→&nbsp;  df/dâ ≤ |∇f(X₀)|</div>
+        </div>
+
+        <div class="card card--glass mt">
+          <h3>Diferenciabilidad</h3>
+          <p>f es diferenciable en X₀ si existe una función afín A(x) tal que f(X₀) = A(X₀) y [f(X₀) − A(X₀)] tiende a cero más rápido que (X − X₀).</p>
+          <div class="alert alert--tip mt-sm"><strong>Condición suficiente:</strong> Si las derivadas parciales f<sub>x</sub> y f<sub>y</sub> existen en un entorno de (a,b) y son continuas en (a,b) → f es diferenciable en (a,b).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 3. EXTREMOS RELATIVOS ════════════════════════════════════════ -->
+    <section id="extremos" class="section section--odd">
+      <div class="section-num">03</div>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Extremos Relativos &amp; Plano Tangente</h2>
+          <p class="section-lead">Puntos críticos, Hessiano, Taylor y Lagrange</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card card--blue">
+            <h3>Mínimo Local</h3>
+            <p>f(x,y) alcanza un mínimo local en X₀ si:</p>
+            <div class="formula">∀ X ∈ ℝⁿ &nbsp; f(X) ≥ f(X₀)</div>
+          </div>
+          <div class="card card--teal">
+            <h3>Máximo Local</h3>
+            <p>f(x,y) alcanza un máximo local en X₀ si:</p>
+            <div class="formula">∀ X ∈ ℝⁿ &nbsp; f(X) ≤ f(X₀)</div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--dark mt">
+          <h3>Condición Necesaria — Existencia de Puntos Críticos</h3>
+          <p>X₀ es un punto crítico si alguna de estas condiciones se cumple:</p>
+          <div class="grid grid-2 mt-sm">
+            <div class="formula">① ∇f(X₀) = 0̄</div>
+            <div class="formula">② f<sub>x</sub>(X₀) ∧ f<sub>y</sub>(X₀) no existen simultáneamente</div>
+          </div>
+          <div class="alert alert--info mt-sm">Si f es diferenciable y ∇f(X) = 0̄ → todas las derivadas direccionales son cero → plano tangente <strong>horizontal</strong> en el PC.</div>
+        </div>
+
+        <div class="card card--wide card--glass mt">
+          <h3>Condición Suficiente — Determinante Hessiano Δ</h3>
+          <div class="formula formula--large">Δ = f<sub>xx</sub>·f<sub>yy</sub> − (f<sub>xy</sub>)²</div>
+          <div class="hessiano-grid mt-sm">
+            <div class="h-row h-row--green"><span class="h-cond">Δ &gt; 0 y f<sub>xx</sub> &gt; 0</span><span class="h-result">MÍNIMO relativo</span></div>
+            <div class="h-row h-row--blue"><span class="h-cond">Δ &gt; 0 y f<sub>xx</sub> &lt; 0</span><span class="h-result">MÁXIMO relativo</span></div>
+            <div class="h-row h-row--amber"><span class="h-cond">Δ &lt; 0</span><span class="h-result">PUNTO SILLA (no es extremo)</span></div>
+            <div class="h-row h-row--gray"><span class="h-cond">Δ = 0</span><span class="h-result">No se puede asegurar nada</span></div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--blue mt">
+          <h3>Polinomio de Taylor — Análisis del signo de d²f</h3>
+          <div class="formula formula--large">f(X) ≈ f(X₀) + [f<sub>x</sub>ΔX + f<sub>y</sub>ΔY] + ½[f<sub>xx</sub>(ΔX)² + 2f<sub>xy</sub>ΔXΔY + f<sub>yy</sub>(ΔY)²]</div>
+          <div class="grid grid-2 mt-sm">
+            <div class="formula">f(X) − A(X₀) = d²f(X₀)</div>
+            <div>
+              <div class="fact-row"><span class="fact-icon">+</span><div>d²f &gt; 0 → <strong>MÍNIMO</strong> (f sobre el afín)</div></div>
+              <div class="fact-row mt-sm"><span class="fact-icon">−</span><div>d²f &lt; 0 → <strong>MÁXIMO</strong> (f bajo el afín)</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--accent mt">
+          <h3>⭐ Extremos Condicionados — Multiplicadores de Lagrange</h3>
+          <p>Optimización con restricciones. Se construye la función auxiliar:</p>
+          <div class="formula formula--white mt-sm">F(X) = f(x,y) + λ₁G₁ + λ₂G₂ + ... + λₙGₙ</div>
+          <div class="steps-list mt-sm">
+            <div class="step"><span>1</span><p>Armar la función auxiliar F(X).</p></div>
+            <div class="step"><span>2</span><p>Derivar en f<sub>x</sub> y f<sub>y</sub> e igualar a cero.</p></div>
+            <div class="step"><span>3</span><p>Despejar λ e igualar las expresiones obtenidas.</p></div>
+            <div class="step"><span>4</span><p>Determinar X, Y, Z y reemplazar en la condición → obtener los PC.</p></div>
+            <div class="step"><span>5</span><p>Análisis de naturaleza: despejar variable de la condición, reemplazar en f(x) de una sola variable.</p></div>
+            <div class="step"><span>6</span><p>Derivar → f'(x) → f''(x): si f'' &gt; 0 → mínimo; si f'' &lt; 0 → máximo.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 4. FUNCIONES PARAMÉTRICAS / CURVAS ═══════════════════════════ -->
+    <section id="curvas" class="section section--even">
+      <div class="section-num">04</div>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Funciones Paramétricas &amp; Curvas</h2>
+          <p class="section-lead">ℝ → ℝᵐ, trayectorias, velocidad y aceleración</p>
+        </div>
+
+        <div class="card card--wide card--dark">
+          <h3>Función Vectorial de Variable Real</h3>
+          <p>Función cuyo <strong>dominio</strong> es ℝ y cuya <strong>imagen</strong> es un conjunto de vectores. El parámetro <em>t</em> indica tiempo → la curva indica una trayectoria.</p>
+          <div class="formula formula--large">g : ℝ → ℝᵐ &nbsp;&nbsp; g(t) = ( g₁(t), g₂(t), ..., gₘ(t) )</div>
+          <div class="alert alert--info mt-sm">Solo se grafica la <strong>imagen</strong> (curvas en plano o espacio, NO superficies).</div>
+        </div>
+
+        <div class="grid grid-2 mt">
+          <div class="card card--blue">
+            <h3>Curvas en el Plano  ℝ → ℝ²</h3>
+            <div class="formula">x = g₁(t)<br>y = g₂(t) &nbsp;→&nbsp; g(t) = (g₁(t), g₂(t))</div>
+            <p class="mt-sm"><strong>Circunferencia:</strong> g(t) = (r·cos t, r·sen t)<br><strong>Elipse:</strong> x = a·cos t, y = b·sen t</p>
+          </div>
+          <div class="card card--teal">
+            <h3>Curvas en el Espacio  ℝ → ℝ³</h3>
+            <div class="formula">g(t) = ( g₁(t), g₂(t), g₃(t) )</div>
+            <p class="mt-sm">El gráfico de la imagen representa una curva en el espacio xyz.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2 mt">
+          <div class="card card--glass">
+            <h3>Límite y Continuidad</h3>
+            <div class="formula">lim<sub>t→a</sub> g(t) = ( lim g₁(t), lim g₂(t), ..., lim gₘ(t) )</div>
+            <p class="mt-sm">Continua si: lim<sub>t→a</sub> g(t) = g(a)</p>
+          </div>
+          <div class="card card--glass">
+            <h3>Derivada — Componente a componente</h3>
+            <div class="formula">g'(t) = ( g₁'(t), g₂'(t), ..., gₘ'(t) )</div>
+            <p class="mt-sm">g'(t) = vector tangente a la curva = <strong>vector velocidad</strong> V(t)</p>
+          </div>
+        </div>
+
+        <div class="card card--wide card--accent mt">
+          <h3>⭐ Recta Tangente a una Trayectoria</h3>
+          <div class="formula formula--white formula--large">r(t) = g(t₀) + t · g'(t₀)</div>
+          <div class="grid grid-2 mt-sm">
+            <div class="mini-card mini-card--dark"><strong>g(t₀)</strong> = vector posición (punto)</div>
+            <div class="mini-card mini-card--dark"><strong>g'(t₀)</strong> = vector director (tangente / velocidad)</div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--dark mt">
+          <h3>Velocidad y Aceleración Vectorial</h3>
+          <div class="grid grid-2 mt-sm">
+            <div>
+              <div class="fact-row"><span class="fact-icon">v</span><div>g'(t) = <strong>V(t)</strong> → vector velocidad</div></div>
+              <div class="fact-row mt-sm"><span class="fact-icon">|v|</span><div>|g'(t)| = v(t) → rapidez (velocidad escalar)</div></div>
+              <div class="fact-row mt-sm"><span class="fact-icon">a</span><div>g''(t) = <strong>ā(t)</strong> → vector aceleración</div></div>
+              <div class="fact-row mt-sm"><span class="fact-icon">|a|</span><div>|g''(t)| = a(t) → aceleración escalar</div></div>
+            </div>
+            <div>
+              <p><strong>Componente Tangencial y Normal:</strong></p>
+              <div class="formula mt-sm">τ̂ = g'(t) / |g'(t)| = V(t) / v(t)</div>
+              <div class="formula mt-sm">a_T = |v(t)|' &nbsp; (componente escalar)</div>
+              <div class="formula mt-sm">a_N = √[ a(t)² − a_T² ]</div>
+              <div class="alert alert--tip mt-sm">Con rapidez constante: V(t) ⊥ ā(t)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--glass mt">
+          <h3>Longitud de Curva (Arco)</h3>
+          <div class="formula formula--large">L<sub>c</sub> = ∫<sub>a</sub><sup>b</sup> |g'(t)| dt</div>
+          <p class="mt-sm">Para una curva g(t) = (g₁(t), g₂(t), g₃(t)) continua por tramos en [a,b].</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 5. CAMPOS VECTORIALES E INTEGRALES DE LÍNEA ══════════════════ -->
+    <section id="campos" class="section section--odd">
+      <div class="section-num">05</div>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Campos Vectoriales &amp; Integrales de Línea</h2>
+          <p class="section-lead">Conservativos, potencial, trabajo, rotacional y divergencia</p>
+        </div>
+
+        <div class="card card--wide card--dark">
+          <h3>Campo Vectorial  F : ℝⁿ → ℝⁿ  (n = m, n∧m ≠ 1)</h3>
+          <p>Representación gráfica mediante <strong>flechas</strong>: origen en punto del dominio, extremo en punto de la imagen.</p>
+          <div class="grid grid-2 mt-sm">
+            <div class="formula">F : ℝ² → ℝ² &nbsp; F(x,y) = (M, N)</div>
+            <div class="formula">F : ℝ³ → ℝ³ &nbsp; F(x,y,z) = (M, N, P)</div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--accent mt">
+          <h3>⭐ Campos Conservativos</h3>
+          <p>Un campo F(x,y) = (M,N) es <strong>conservativo</strong> si las derivadas cruzadas son iguales:</p>
+          <div class="formula formula--white formula--large mt-sm">∂N/∂x = ∂M/∂y</div>
+          <div class="grid grid-2 mt-sm">
+            <div class="mini-card mini-card--dark">
+              <strong>Definición alternativa:</strong> F es conservativo si existe f diferenciable tal que F = ∇f. Esta f se llama <em>función potencial</em>.
+            </div>
+            <div class="mini-card mini-card--dark">
+              <strong>En ℝ³:</strong> se verifica calculando el rotacional. Si rot(F) = 0̄ → campo conservativo.
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--blue mt">
+          <h3>Función Potencial — Cálculo</h3>
+          <div class="formula">M = ∂f/∂x  →  f = ∫M dx = f = ∫N dy  ←  N = ∂f/∂y</div>
+          <div class="steps-list mt-sm">
+            <div class="step"><span>1</span><p>Integrar M respecto a x → obtener f(x,y) + φ(y)</p></div>
+            <div class="step"><span>2</span><p>Derivar respecto a y e igualar a N → despejar φ'(y)</p></div>
+            <div class="step"><span>3</span><p>Integrar φ'(y) → construir f(x,y) completa.</p></div>
+          </div>
+          <div class="alert alert--tip mt-sm">f(x,y) se forma reuniendo lo que se repite en ambas integrales, luego lo que no se repite.</div>
+        </div>
+
+        <div class="card card--wide card--teal mt">
+          <h3>Integral de Línea en un Campo Vectorial — Trabajo</h3>
+          <p>Calcula el trabajo para desplazar una partícula por la curva γ de a hasta b en el campo F.</p>
+          <div class="formula formula--large mt-sm">W<sub>T</sub> = ∫<sub>a</sub><sup>b</sup> F[g(t)] · g'(t) dt</div>
+          <div class="grid grid-3 mt-sm">
+            <div class="mini-card"><strong>1.</strong> Parametrizar F(x,y,z)</div>
+            <div class="mini-card"><strong>2.</strong> Derivar g(t) → g'(t)</div>
+            <div class="mini-card"><strong>3.</strong> Componer F[g(t)]</div>
+            <div class="mini-card"><strong>4.</strong> Producto punto F[g(t)]·g'(t)</div>
+            <div class="mini-card"><strong>5.</strong> Integral definida</div>
+            <div class="mini-card">También: W = ∫<sub>γ</sub> M dx + N dy</div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--glass mt">
+          <h3>Teorema Fundamental de las Integrales de Línea</h3>
+          <p>En campo conservativo el trabajo <strong>no depende de la trayectoria</strong>:</p>
+          <div class="formula formula--large">W<sub>T</sub> = f[x(b), y(b)] − f[x(a), y(a)] = f(b) − f(a)</div>
+          <div class="alert alert--info mt-sm">Si C es curva <strong>cerrada</strong> y el campo es conservativo → W<sub>T</sub> = 0</div>
+        </div>
+
+        <div class="grid grid-2 mt">
+          <div class="card card--dark">
+            <h3>Rotacional  (rot F)</h3>
+            <div class="formula">rot(F) = ∇ × F = det | i  j  k  |<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|∂/∂x ∂/∂y ∂/∂z|<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| M    N    P  |</div>
+            <div class="alert alert--tip mt-sm">rot F = 0 → campo conservativo (en ℝ³)</div>
+          </div>
+          <div class="card card--dark">
+            <h3>Divergencia  (div F)</h3>
+            <div class="formula">div F(x,y) = ∂M/∂x + ∂N/∂y</div>
+            <div class="formula mt-sm">div F(x,y,z) = ∂M/∂x + ∂N/∂y + ∂P/∂z</div>
+            <p class="mt-sm">Función <strong>escalar</strong> (a diferencia del rotacional que es vectorial).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 6. TEOREMA DE GREEN ═══════════════════════════════════════════ -->
+    <section id="green" class="section section--even">
+      <div class="section-num">06</div>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Teorema de Green</h2>
+          <p class="section-lead">Relación entre integral de línea y rotacional sobre una región plana</p>
+        </div>
+
+        <div class="card card--wide card--accent">
+          <h3>⭐ Enunciado</h3>
+          <p>Sea R una región del plano simple cuyo borde es una curva cerrada C, suave a trozos, orientada en <strong>sentido antihorario</strong>, y si M y N tienen derivadas parciales continuas en una región abierta que contiene a R, se cumple:</p>
+          <div class="formula formula--white formula--xl mt-sm">∮<sub>C</sub> M dx + N dy = ∬<sub>R</sub> (∂N/∂x − ∂M/∂y) dA</div>
+          <div class="alert alert--info mt-sm">El término (∂N/∂x − ∂M/∂y) es el <strong>rotacional</strong> del campo F = (M,N).</div>
+        </div>
+
+        <div class="card card--wide card--dark mt">
+          <h3>Tres casos según el valor del Rotacional</h3>
+          <div class="green-cases mt-sm">
+            <div class="green-case green-case--zero">
+              <div class="gc-num">ROT = 0</div>
+              <div class="gc-desc">Campo conservativo → <strong>W<sub>T</sub> = 0</strong><br>La integral de línea sobre cualquier curva cerrada es cero.</div>
+            </div>
+            <div class="green-case green-case--cte">
+              <div class="gc-num">ROT = cte</div>
+              <div class="gc-desc"><strong>W<sub>T</sub> = ROT · Área</strong> de la región<br>Se calcula el área (forma geométrica) y se multiplica.</div>
+            </div>
+            <div class="green-case green-case--fn">
+              <div class="gc-num">ROT = f(x,y)</div>
+              <div class="gc-desc"><strong>W<sub>T</sub> = ∬<sub>R</sub> f(x,y) dA</strong><br>Se aplica integral doble sobre la región encerrada.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--glass mt">
+          <h3>Rotacional en ℝ³</h3>
+          <div class="formula formula--large">rot(F) = ∇ × F = i(∂P/∂y − ∂N/∂z) − j(∂P/∂x − ∂M/∂z) + k(∂N/∂x − ∂M/∂y)</div>
+          <div class="alert alert--tip mt-sm">Si rot F = 0 en todo el espacio → F es conservativo si y solo si el dominio es todo ℝ³.</div>
+        </div>
+
+        <div class="card card--wide card--blue mt">
+          <h3>Interpretación</h3>
+          <p>El Teorema de Green dice que la <em>circulación antihoraria</em> de un campo vectorial alrededor de una curva cerrada simple es igual a la <em>integral doble del rotacional</em> del campo sobre la región encerrada por la curva.</p>
+          <div class="alert alert--info mt-sm">
+            <strong>Resumen de gráficas:</strong> Funciones reales → superficies · Funciones paramétricas → curvas · Funciones de campo → flechas
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 7. INTEGRALES MÚLTIPLES ═══════════════════════════════════════ -->
+    <section id="integrales" class="section section--odd">
+      <div class="section-num">07</div>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Integrales Múltiples</h2>
+          <p class="section-lead">Dobles, regiones, cálculo de áreas y volúmenes</p>
+        </div>
+
+        <div class="card card--wide card--dark">
+          <h3>Integral Doble  f : ℝ² → ℝ</h3>
+          <p>Se utiliza para calcular <strong>áreas o volúmenes</strong>. Se divide el dominio D en pequeños cuadrados ΔxΔy y se proyectan hacia la superficie.</p>
+          <div class="formula formula--large">V = ∬<sub>D</sub> f(x,y) dx dy &nbsp;&nbsp; (D = dominio de integración)</div>
+          <div class="formula mt-sm">∬<sub>D</sub> f(x,y) dxdy = lim<sub>Δx→0, Δy→0</sub> Σ f(xᵢ,yᵢ) ΔxᵢΔyᵢ</div>
+        </div>
+
+        <div class="card card--wide card--glass mt">
+          <h3>Regiones Rectangulares</h3>
+          <p>Los límites son constantes. Se puede integrar en cualquier orden (Teorema de Fubini):</p>
+          <div class="formula formula--large mt-sm">V = ∫<sub>a</sub><sup>b</sup> ∫<sub>c</sub><sup>d</sup> F(x,y) dy dx = ∫<sub>c</sub><sup>d</sup> ∫<sub>a</sub><sup>b</sup> F(x,y) dx dy</div>
+        </div>
+
+        <div class="card card--wide card--accent mt">
+          <h3>⭐ Regiones No Rectangulares — Teorema de Fubini</h3>
+          <div class="grid grid-2 mt-sm">
+            <div class="region-card region-card--tipo1">
+              <div class="region-title">Tipo I · Verticalmente Simple</div>
+              <p>x entre <strong>constantes</strong>, y entre <strong>funciones</strong></p>
+              <div class="formula formula--white mt-sm">D₁ = &#123; (x,y) / a ≤ x ≤ b, g₁(x) ≤ y ≤ g₂(x) &#125;</div>
+              <div class="formula formula--white mt-sm">V = ∫<sub>a</sub><sup>b</sup> ∫<sub>g₁(x)</sub><sup>g₂(x)</sup> f(x,y) dy dx</div>
+            </div>
+            <div class="region-card region-card--tipo2">
+              <div class="region-title">Tipo II · Horizontalmente Simple</div>
+              <p>y entre <strong>constantes</strong>, x entre <strong>funciones</strong></p>
+              <div class="formula formula--white mt-sm">D₂ = &#123; (x,y) / c ≤ y ≤ d, h₁(y) ≤ x ≤ h₂(y) &#125;</div>
+              <div class="formula formula--white mt-sm">V = ∫<sub>c</sub><sup>d</sup> ∫<sub>h₁(y)</sub><sup>h₂(y)</sup> f(x,y) dx dy</div>
+            </div>
+          </div>
+          <div class="alert mt-sm"><strong>Clave:</strong> al armar los límites, se debe siempre entrar por una función y salir por otra. Se aplica trazando líneas horizontales o verticales sobre la región.</div>
+        </div>
+
+        <div class="grid grid-2 mt">
+          <div class="card card--blue">
+            <h3>Cálculo de Área</h3>
+            <p>Se considera f(x,y) = 1 → la integral doble calcula el área:</p>
+            <div class="formula mt-sm">A = ∬<sub>D</sub> dx dy = ∫<sub>a</sub><sup>b</sup> dx ∫<sub>g₁(x)</sub><sup>g₂(x)</sup> dy</div>
+          </div>
+          <div class="card card--teal">
+            <h3>Cálculo de Volumen</h3>
+            <p>Igual que el área pero con f(x,y) obtenida al despejar z de la superficie:</p>
+            <div class="formula mt-sm">V = ∬<sub>D</sub> f(x,y) dA</div>
+          </div>
+        </div>
+
+        <div class="card card--wide card--dark mt">
+          <h3>Propiedades de la Integral Doble</h3>
+          <div class="grid grid-2 mt-sm">
+            <div class="formula">∬ c·f dA = c·∬ f dA</div>
+            <div class="formula">∬ [f ± g] dA = ∬ f dA ± ∬ g dA</div>
+            <div class="formula">f ≥ 0 → ∬ f dA ≥ 0</div>
+            <div class="formula">f ≥ g → ∬ f dA ≥ ∬ g dA</div>
+            <div class="formula span-2">∬<sub>R</sub> f dA = ∬<sub>R₁</sub> f dA + ∬<sub>R₂</sub> f dA &nbsp; (suma de regiones)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER ══════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">Análisis Matemático II · Resumen de Teoría</p>
+      <p class="footer-sub">Confeccionado a partir de los apuntes de clase</p>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.card, .section-header, .green-case, .step, .h-row, .region-card')
+      .forEach(el => observer.observe(el));
+
+    // Active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.hero-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>
