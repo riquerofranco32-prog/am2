@@ -15,7 +15,6 @@
   --surface:#ffffff;
   --surface2:#f0ede8;
   --border:rgba(0,0,0,0.09);
-
   --blue:#1a5fb4;
   --blue-dim:rgba(26,95,180,0.07);
   --teal:#0a7c6e;
@@ -26,15 +25,12 @@
   --green-dim:rgba(29,122,78,0.08);
   --accent:#4c3fb5;
   --accent-dim:rgba(76,63,181,0.07);
-
   --text:#1c1c1e;
   --text-muted:#52596a;
   --text-dim:#9aa0ac;
-
   --font-display:'Playfair Display',Georgia,serif;
   --font-mono:'DM Mono','Courier New',monospace;
   --font-body:'DM Sans',system-ui,sans-serif;
-
   --radius:12px;
   --radius-lg:20px;
   --shadow:0 2px 16px rgba(0,0,0,0.07);
@@ -142,6 +138,10 @@ a{color:inherit}
 .card--accent{background:linear-gradient(135deg,rgba(76,63,181,0.06),rgba(26,95,180,0.04));border-color:rgba(76,63,181,0.2)}
 .card--accent h3{color:var(--accent)}
 
+/* NEW: card purpura para derivadas parciales */
+.card--purple{border-left:3px solid #7c3aed;background:rgba(124,58,237,0.06)}
+.card--purple h3{color:#7c3aed}
+
 .mini-card{
   background:var(--surface2);border:1px solid var(--border);
   border-radius:var(--radius);padding:.85rem 1rem;font-size:.88rem;color:var(--text-muted);
@@ -158,6 +158,7 @@ a{color:inherit}
 .formula--large{font-size:.97rem;padding:.9rem 1.2rem}
 .formula--xl{font-size:1.1rem;padding:1rem 1.4rem;letter-spacing:.03em}
 .formula--white{color:var(--text)}
+.formula--purple{color:#7c3aed}
 
 /* TAGS */
 .tag{
@@ -168,11 +169,13 @@ a{color:inherit}
 .tag--blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(26,95,180,0.2)}
 .tag--teal{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(10,124,110,0.2)}
 .tag--amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(180,83,9,0.2)}
+.tag--purple{background:rgba(124,58,237,0.08);color:#7c3aed;border:1px solid rgba(124,58,237,0.2)}
 
 /* ALERTS */
 .alert{border-radius:var(--radius);padding:.75rem 1rem;font-size:.88rem;line-height:1.5;background:var(--amber-dim);border-left:3px solid var(--amber);color:#92400e}
 .alert--info{background:var(--blue-dim);border-left-color:var(--blue);color:#1e3a5f}
 .alert--tip{background:var(--teal-dim);border-left-color:var(--teal);color:#064e3b}
+.alert--purple{background:rgba(124,58,237,0.07);border-left:3px solid #7c3aed;color:#4c1d95}
 
 /* FACT ROWS */
 .fact-row{display:flex;align-items:flex-start;gap:.75rem;font-size:.92rem}
@@ -211,6 +214,24 @@ a{color:inherit}
   font-family:var(--font-mono);font-size:.77rem;font-weight:500;margin-top:.15rem;
 }
 .step p{font-size:.92rem;color:var(--text-muted)}
+
+/* DERIVADAS PARCIALES — tabla de interpretaciones */
+.dparcial-table{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.75rem}
+@media(max-width:580px){.dparcial-table{grid-template-columns:1fr}}
+.dparcial-cell{
+  border-radius:var(--radius);padding:.85rem 1rem;font-size:.88rem;
+  opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .45s ease;
+}
+.dparcial-cell.visible{opacity:1;transform:none}
+.dparcial-cell--fx{background:rgba(26,95,180,0.07);border:1px solid rgba(26,95,180,0.18)}
+.dparcial-cell--fy{background:rgba(10,124,110,0.07);border:1px solid rgba(10,124,110,0.18)}
+.dparcial-cell--fxx{background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.18)}
+.dparcial-cell--fxy{background:rgba(180,83,9,0.06);border:1px solid rgba(180,83,9,0.18)}
+.dparcial-label{font-family:var(--font-mono);font-size:.8rem;font-weight:500;margin-bottom:.3rem}
+.dparcial-cell--fx .dparcial-label{color:var(--blue)}
+.dparcial-cell--fy .dparcial-label{color:var(--teal)}
+.dparcial-cell--fxx .dparcial-label{color:#7c3aed}
+.dparcial-cell--fxy .dparcial-label{color:var(--amber)}
 
 /* GREEN CASES */
 .green-cases{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
@@ -289,6 +310,7 @@ a{color:inherit}
 
   <main>
 
+    <!-- BLOQUE 01: DOMINIO -->
     <section id="dominio" class="section section--odd">
       <div class="section-num">01</div>
       <div class="container">
@@ -345,14 +367,85 @@ a{color:inherit}
       </div>
     </section>
 
+    <!-- BLOQUE 02: GRADIENTE (EXPANDIDO) -->
     <section id="gradiente" class="section section--even">
       <div class="section-num">02</div>
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Derivadas Direccionales &amp; Gradiente</h2>
-          <p class="section-lead">Jacobiano, diferencial, máximo crecimiento</p>
+          <h2 class="section-title">Derivadas Parciales, Gradiente &amp; Direccionales</h2>
+          <p class="section-lead">Jacobiano, diferencial, derivadas parciales, plano tangente implícito y máximo crecimiento</p>
         </div>
-        <div class="card card--wide card--dark">
+
+        <!-- ── NUEVO: DERIVADAS PARCIALES ── -->
+        <div class="card card--wide card--purple">
+          <span class="tag tag--purple">Nuevo</span>
+          <h3>Derivadas Parciales — Definición</h3>
+          <p>La derivada parcial de f respecto a x en el punto (x₀, y₀) representa la <strong>pendiente de la recta tangente</strong> a la curva que se forma al cortar la superficie con un plano paralelo al plano XoZ (dejando y constante). Es la razón de cambio de f en la dirección de x.</p>
+          <div class="grid grid-2 mt-sm">
+            <div>
+              <div class="formula formula--purple">f<sub>x</sub>(x₀,y₀) = lim<sub>Δx→0</sub> [f(x₀+Δx, y₀) − f(x₀,y₀)] / Δx</div>
+              <p class="mt-sm" style="font-size:.85rem">Se deriva respecto a <strong>x</strong> tratando y como constante.</p>
+            </div>
+            <div>
+              <div class="formula formula--purple">f<sub>y</sub>(x₀,y₀) = lim<sub>Δy→0</sub> [f(x₀, y₀+Δy) − f(x₀,y₀)] / Δy</div>
+              <p class="mt-sm" style="font-size:.85rem">Se deriva respecto a <strong>y</strong> tratando x como constante.</p>
+            </div>
+          </div>
+          <div class="alert alert--purple mt-sm">
+            <strong>Interpretación geométrica:</strong> f<sub>x</sub> y f<sub>y</sub> son las pendientes de la superficie en las direcciones de los ejes coordenados. Juntas determinan el plano tangente en ese punto.
+          </div>
+        </div>
+
+        <!-- tabla de derivadas -->
+        <div class="card card--wide card--dark mt">
+          <h3>Derivadas de Primer y Segundo Orden</h3>
+          <p>Para f : ℝ² → ℝ, las derivadas parciales de segundo orden se obtienen derivando dos veces. <strong>Teorema de Schwarz:</strong> si f<sub>xy</sub> y f<sub>yx</sub> son continuas, entonces son iguales.</p>
+          <div class="dparcial-table mt-sm">
+            <div class="dparcial-cell dparcial-cell--fx">
+              <div class="dparcial-label">f<sub>x</sub> = ∂f/∂x</div>
+              <p>Derivar respecto a x. Pendiente en dirección x.</p>
+            </div>
+            <div class="dparcial-cell dparcial-cell--fy">
+              <div class="dparcial-label">f<sub>y</sub> = ∂f/∂y</div>
+              <p>Derivar respecto a y. Pendiente en dirección y.</p>
+            </div>
+            <div class="dparcial-cell dparcial-cell--fxx">
+              <div class="dparcial-label">f<sub>xx</sub> = ∂²f/∂x²</div>
+              <p>Segunda derivada respecto a x. Concavidad en x.</p>
+            </div>
+            <div class="dparcial-cell dparcial-cell--fxy">
+              <div class="dparcial-label">f<sub>xy</sub> = f<sub>yx</sub></div>
+              <p>Derivada cruzada. Mismo resultado en ambos órdenes si son continuas.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── NUEVO: PLANO TANGENTE FORMA IMPLÍCITA ── -->
+        <div class="card card--wide card--amber mt">
+          <span class="tag tag--amber">Nuevo</span>
+          <h3>Plano Tangente en Forma Implícita</h3>
+          <p>Cuando la superficie está dada en forma implícita F(x, y, z) = 0, el plano tangente en el punto P₀(x₀, y₀, z₀) se obtiene usando el gradiente de F como vector normal al plano.</p>
+          <div class="grid grid-2 mt-sm">
+            <div>
+              <p style="font-size:.88rem;margin-bottom:.5rem"><strong>Forma explícita</strong> — z = f(x,y):</p>
+              <div class="formula">(Z − Z₀) = f<sub>x₀</sub>(X−X₀) + f<sub>y₀</sub>(Y−Y₀)</div>
+            </div>
+            <div>
+              <p style="font-size:.88rem;margin-bottom:.5rem"><strong>Forma implícita</strong> — F(x,y,z) = 0:</p>
+              <div class="formula">F<sub>x</sub>(X−X₀) + F<sub>y</sub>(Y−Y₀) + F<sub>z</sub>(Z−Z₀) = 0</div>
+            </div>
+          </div>
+          <div class="alert mt-sm">
+            <strong>Procedimiento:</strong> (1) Expresar como F(x,y,z) = f(x,y) − z = 0. (2) Calcular F<sub>x</sub>, F<sub>y</sub>, F<sub>z</sub>. (3) Evaluar en P₀. (4) Reemplazar en la ecuación del plano implícito.
+          </div>
+          <div class="formula formula--large mt-sm">∇F(X₀) = ( F<sub>x</sub>(X₀) , F<sub>y</sub>(X₀) , F<sub>z</sub>(X₀) ) → vector normal al plano tg</div>
+          <div class="alert alert--info mt-sm">
+            <strong>Recta normal:</strong> La recta perpendicular al plano tangente en P₀ tiene dirección ∇F(X₀) y ecuación: r(t) = P₀ + t · ∇F(X₀).
+          </div>
+        </div>
+
+        <!-- ── DERIVADA TOTAL / JACOBIANO ── -->
+        <div class="card card--wide card--dark mt">
           <h3>Derivada Total — Matriz Jacobiana</h3>
           <p>Se obtiene derivando cada función del segundo espacio respecto a cada variable del primero.</p>
           <div class="formula formula--large">f'(X) = J = [ ∂f₁/∂x  ∂f₁/∂y ] / [ ∂f₂/∂x  ∂f₂/∂y ]</div>
@@ -369,12 +462,16 @@ a{color:inherit}
             <div class="formula">Δf = f(X₀ + ΔX) − f(X₀)</div>
           </div>
         </div>
+
+        <!-- DERIVADA DIRECCIONAL -->
         <div class="card card--wide card--glass mt">
           <h3>Derivada Direccional</h3>
           <p>Pendiente de la recta tangente a una curva generada al cortar la superficie con un plano que contenga al vector <em>v̂</em> (versor unitario).</p>
           <div class="formula formula--large">df/dv̂ = f'(X₀) · v̂ = ∇f(X₀) · v̂ &nbsp;&nbsp;&nbsp; donde v̂ = v / |v|</div>
           <div class="alert alert--tip mt-sm"><strong>Procedimiento:</strong> Evaluar el Jacobiano de la función en el punto y multiplicar por el versor v̂.</div>
         </div>
+
+        <!-- GRADIENTE -->
         <div class="card card--wide card--accent mt">
           <h3>⭐ Vector Gradiente — Dirección del Máximo Crecimiento</h3>
           <div class="formula formula--large formula--white mt-sm">∇f(X₀) = f'(X₀) = ( f<sub>x</sub>(x,y) , f<sub>y</sub>(x,y) )</div>
@@ -387,6 +484,7 @@ a{color:inherit}
           </div>
           <div class="formula mt-sm">|∇f(X₀) · â| ≤ |∇f(X₀)| · |â| → df/dâ ≤ |∇f(X₀)|</div>
         </div>
+
         <div class="card card--glass mt">
           <h3>Diferenciabilidad</h3>
           <p>f es diferenciable en X₀ si existe una función afín A(x) tal que f(X₀) = A(X₀) y [f(X₀) − A(X₀)] tiende a cero más rápido que (X − X₀).</p>
@@ -395,6 +493,7 @@ a{color:inherit}
       </div>
     </section>
 
+    <!-- BLOQUE 03: EXTREMOS -->
     <section id="extremos" class="section section--odd">
       <div class="section-num">03</div>
       <div class="container">
@@ -460,6 +559,7 @@ a{color:inherit}
       </div>
     </section>
 
+    <!-- BLOQUE 04: CURVAS -->
     <section id="curvas" class="section section--even">
       <div class="section-num">04</div>
       <div class="container">
@@ -531,6 +631,7 @@ a{color:inherit}
       </div>
     </section>
 
+    <!-- BLOQUE 05: CAMPOS -->
     <section id="campos" class="section section--odd">
       <div class="section-num">05</div>
       <div class="container">
@@ -600,6 +701,7 @@ a{color:inherit}
       </div>
     </section>
 
+    <!-- BLOQUE 06: GREEN -->
     <section id="green" class="section section--even">
       <div class="section-num">06</div>
       <div class="container">
@@ -643,6 +745,7 @@ a{color:inherit}
       </div>
     </section>
 
+    <!-- BLOQUE 07: INTEGRALES -->
     <section id="integrales" class="section section--odd">
       <div class="section-num">07</div>
       <div class="container">
@@ -709,7 +812,7 @@ a{color:inherit}
   <footer class="footer">
     <div class="container">
       <p class="footer-text">Análisis Matemático II · Resumen de Teoría</p>
-      <p class="footer-sub">Confeccionado a partir de los apuntes de clase</p>
+      <p class="footer-sub">Confeccionado a partir de los apuntes de clase · v2 con derivadas parciales y plano tangente implícito</p>
     </div>
   </footer>
 
@@ -717,7 +820,7 @@ a{color:inherit}
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
-    document.querySelectorAll('.card, .section-header, .green-case, .step, .h-row, .region-card')
+    document.querySelectorAll('.card, .section-header, .green-case, .step, .h-row, .region-card, .dparcial-cell')
       .forEach(el => observer.observe(el));
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.hero-nav a');
