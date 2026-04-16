@@ -6,11 +6,265 @@
   <title>Análisis Matemático II — Resumen de Teoría</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f6f2;
+  --bg2:#ffffff;
+  --bg3:#eeecea;
+  --surface:#ffffff;
+  --surface2:#f0ede8;
+  --border:rgba(0,0,0,0.09);
+
+  --blue:#1a5fb4;
+  --blue-dim:rgba(26,95,180,0.07);
+  --teal:#0a7c6e;
+  --teal-dim:rgba(10,124,110,0.07);
+  --amber:#b45309;
+  --amber-dim:rgba(180,83,9,0.07);
+  --green:#1d7a4e;
+  --green-dim:rgba(29,122,78,0.08);
+  --accent:#4c3fb5;
+  --accent-dim:rgba(76,63,181,0.07);
+
+  --text:#1c1c1e;
+  --text-muted:#52596a;
+  --text-dim:#9aa0ac;
+
+  --font-display:'Playfair Display',Georgia,serif;
+  --font-mono:'DM Mono','Courier New',monospace;
+  --font-body:'DM Sans',system-ui,sans-serif;
+
+  --radius:12px;
+  --radius-lg:20px;
+  --shadow:0 2px 16px rgba(0,0,0,0.07);
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+h1,h2,h3{font-family:var(--font-display);line-height:1.2}
+h3{font-size:1.15rem;margin-bottom:.5rem;color:var(--text)}
+p{color:var(--text-muted);font-size:.95rem}
+sub,sup{font-size:.7em}
+strong{color:var(--text)}
+em{font-style:italic;color:var(--text)}
+a{color:inherit}
+
+.container{max-width:960px;margin:0 auto;padding:0 1.5rem}
+.mt{margin-top:1.5rem}
+.mt-sm{margin-top:.75rem}
+.span-2{grid-column:span 2}
+.grid{display:grid;gap:1rem}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:680px){
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .span-2{grid-column:span 1}
+}
+
+/* HERO */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:4rem 1.5rem 6rem;overflow:hidden;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(26,95,180,0.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(26,95,180,0.055) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
+}
+.hero-inner{position:relative;text-align:center;max-width:700px}
+.hero-badge{
+  display:inline-block;padding:.3rem 1rem;
+  background:var(--accent-dim);border:1px solid rgba(76,63,181,0.2);
+  border-radius:999px;font-family:var(--font-mono);font-size:.8rem;
+  color:var(--accent);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:1.5rem;animation:fadeUp .6s ease both;
+}
+.hero-title{
+  font-size:clamp(2.8rem,7vw,5.5rem);font-weight:900;
+  line-height:1.05;letter-spacing:-.02em;color:var(--text);
+  animation:fadeUp .7s ease both .1s;
+}
+.hero-title-line{display:block}
+.hero-title .italic{font-style:italic;color:var(--accent)}
+.hero-subtitle{margin-top:1rem;font-size:1.05rem;color:var(--text-muted);animation:fadeUp .7s ease both .2s}
+.hero-nav{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;
+  margin-top:2.5rem;animation:fadeUp .7s ease both .3s;
+}
+.hero-nav a{
+  padding:.4rem .9rem;background:var(--surface2);border:1px solid var(--border);
+  border-radius:999px;font-family:var(--font-mono);font-size:.78rem;
+  color:var(--text-muted);text-decoration:none;transition:var(--transition);letter-spacing:.04em;
+}
+.hero-nav a:hover,.hero-nav a.active{background:var(--blue-dim);border-color:rgba(26,95,180,0.3);color:var(--blue)}
+.hero-scroll-hint{
+  position:absolute;bottom:2rem;font-family:var(--font-mono);
+  font-size:.75rem;color:var(--text-dim);letter-spacing:.1em;
+  animation:float 2.5s ease-in-out infinite;
+}
+
+/* SECTIONS */
+.section{position:relative;padding:5rem 0 6rem;overflow:hidden}
+.section--odd{background:var(--bg)}
+.section--even{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.section-num{
+  position:absolute;top:2.5rem;right:2rem;
+  font-family:var(--font-display);font-size:7rem;font-weight:900;
+  color:rgba(0,0,0,0.03);line-height:1;pointer-events:none;user-select:none;
+}
+.section-header{margin-bottom:2.5rem;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.section-header.visible{opacity:1;transform:none}
+.section-title{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:var(--text);letter-spacing:-.02em}
+.section-lead{margin-top:.4rem;font-size:1rem;color:var(--text-muted)}
+
+/* CARDS */
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;
+  opacity:0;transform:translateY(18px);
+  transition:opacity .5s ease,transform .5s ease,border-color var(--transition),box-shadow var(--transition);
+}
+.card.visible{opacity:1;transform:none}
+.card:hover{border-color:rgba(0,0,0,0.15);box-shadow:var(--shadow)}
+.card--wide{grid-column:1 / -1}
+.card--dark{background:var(--bg3)}
+.card--glass{background:rgba(255,255,255,0.75);backdrop-filter:blur(8px);border-color:rgba(0,0,0,0.07)}
+.card--blue{border-left:3px solid var(--blue);background:var(--blue-dim)}
+.card--teal{border-left:3px solid var(--teal);background:var(--teal-dim)}
+.card--amber{border-left:3px solid var(--amber);background:var(--amber-dim)}
+.card--green{border-left:3px solid var(--green);background:var(--green-dim)}
+.card--accent{background:linear-gradient(135deg,rgba(76,63,181,0.06),rgba(26,95,180,0.04));border-color:rgba(76,63,181,0.2)}
+.card--accent h3{color:var(--accent)}
+
+.mini-card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:.85rem 1rem;font-size:.88rem;color:var(--text-muted);
+}
+.mini-card--dark{background:rgba(0,0,0,0.04)}
+
+/* FORMULAS */
+.formula{
+  font-family:var(--font-mono);font-size:.88rem;
+  background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);
+  border-radius:var(--radius);padding:.65rem 1rem;
+  color:var(--teal);text-align:center;line-height:1.6;white-space:pre-wrap;word-break:break-word;
+}
+.formula--large{font-size:.97rem;padding:.9rem 1.2rem}
+.formula--xl{font-size:1.1rem;padding:1rem 1.4rem;letter-spacing:.03em}
+.formula--white{color:var(--text)}
+
+/* TAGS */
+.tag{
+  display:inline-block;padding:.15rem .7rem;border-radius:999px;
+  font-family:var(--font-mono);font-size:.72rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:.5rem;
+}
+.tag--blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(26,95,180,0.2)}
+.tag--teal{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(10,124,110,0.2)}
+.tag--amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(180,83,9,0.2)}
+
+/* ALERTS */
+.alert{border-radius:var(--radius);padding:.75rem 1rem;font-size:.88rem;line-height:1.5;background:var(--amber-dim);border-left:3px solid var(--amber);color:#92400e}
+.alert--info{background:var(--blue-dim);border-left-color:var(--blue);color:#1e3a5f}
+.alert--tip{background:var(--teal-dim);border-left-color:var(--teal);color:#064e3b}
+
+/* FACT ROWS */
+.fact-row{display:flex;align-items:flex-start;gap:.75rem;font-size:.92rem}
+.fact-icon{
+  flex-shrink:0;width:1.8rem;height:1.8rem;
+  background:var(--surface2);border:1px solid var(--border);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.8rem;color:var(--accent);
+}
+
+/* HESSIANO */
+.hessiano-grid{display:grid;gap:.5rem}
+.h-row{
+  display:flex;align-items:center;gap:1rem;border-radius:var(--radius);
+  padding:.65rem 1rem;font-size:.9rem;opacity:0;transform:translateX(-10px);
+  transition:opacity .45s ease,transform .45s ease;
+}
+.h-row.visible{opacity:1;transform:none}
+.h-cond{font-family:var(--font-mono);flex:1;color:var(--text-muted)}
+.h-result{font-weight:600;flex:1;text-align:right}
+.h-row--green{background:var(--green-dim);border:1px solid rgba(29,122,78,0.15)}
+.h-row--green .h-result{color:var(--green)}
+.h-row--blue{background:var(--blue-dim);border:1px solid rgba(26,95,180,0.15)}
+.h-row--blue .h-result{color:var(--blue)}
+.h-row--amber{background:var(--amber-dim);border:1px solid rgba(180,83,9,0.15)}
+.h-row--amber .h-result{color:var(--amber)}
+.h-row--gray{background:rgba(0,0,0,0.03);border:1px solid var(--border);color:var(--text-muted)}
+
+/* STEPS */
+.steps-list{display:grid;gap:.5rem}
+.step{display:flex;align-items:flex-start;gap:.85rem;opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+.step.visible{opacity:1;transform:none}
+.step > span{
+  flex-shrink:0;width:1.7rem;height:1.7rem;background:var(--accent);color:#fff;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.77rem;font-weight:500;margin-top:.15rem;
+}
+.step p{font-size:.92rem;color:var(--text-muted)}
+
+/* GREEN CASES */
+.green-cases{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:680px){.green-cases{grid-template-columns:1fr}}
+.green-case{
+  border-radius:var(--radius-lg);padding:1.3rem;text-align:center;
+  opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;
+}
+.green-case.visible{opacity:1;transform:none}
+.gc-num{
+  font-family:var(--font-mono);font-size:1rem;font-weight:500;
+  margin-bottom:.6rem;padding:.4rem .8rem;border-radius:8px;display:inline-block;
+}
+.gc-desc{font-size:.88rem;color:var(--text-muted);line-height:1.5}
+.green-case--zero{background:var(--teal-dim);border:1px solid rgba(10,124,110,0.15)}
+.green-case--zero .gc-num{background:rgba(10,124,110,0.1);color:var(--teal)}
+.green-case--cte{background:var(--blue-dim);border:1px solid rgba(26,95,180,0.15)}
+.green-case--cte .gc-num{background:rgba(26,95,180,0.1);color:var(--blue)}
+.green-case--fn{background:var(--accent-dim);border:1px solid rgba(76,63,181,0.15)}
+.green-case--fn .gc-num{background:rgba(76,63,181,0.1);color:var(--accent)}
+
+/* REGION CARDS */
+.region-card{border-radius:var(--radius-lg);padding:1.4rem;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.region-card.visible{opacity:1;transform:none}
+.region-title{
+  font-family:var(--font-mono);font-size:.82rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:.6rem;padding:.3rem .8rem;border-radius:999px;display:inline-block;
+}
+.region-card p{font-size:.9rem}
+.region-card--tipo1{background:linear-gradient(135deg,rgba(26,95,180,0.07),rgba(10,124,110,0.04));border:1px solid rgba(26,95,180,0.15)}
+.region-card--tipo1 .region-title{background:var(--blue-dim);color:var(--blue)}
+.region-card--tipo2{background:linear-gradient(135deg,rgba(10,124,110,0.07),rgba(29,122,78,0.04));border:1px solid rgba(10,124,110,0.15)}
+.region-card--tipo2 .region-title{background:var(--teal-dim);color:var(--teal)}
+
+/* FOOTER */
+.footer{background:var(--bg3);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center}
+.footer-text{font-family:var(--font-display);font-size:1rem;color:var(--text-muted)}
+.footer-sub{font-family:var(--font-mono);font-size:.75rem;color:var(--text-dim);margin-top:.3rem}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+::selection{background:rgba(76,63,181,0.18);color:var(--text)}
+</style>
 </head>
 <body>
 
-  <!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
   <header class="hero">
     <div class="hero-grid-bg"></div>
     <div class="hero-inner">
@@ -35,7 +289,6 @@
 
   <main>
 
-    <!-- ═══ 1. DOMINIO Y CURVAS DE NIVEL ════════════════════════════════ -->
     <section id="dominio" class="section section--odd">
       <div class="section-num">01</div>
       <div class="container">
@@ -43,21 +296,18 @@
           <h2 class="section-title">Dominio &amp; Curvas de Nivel</h2>
           <p class="section-lead">Funciones vectoriales reales, límites y continuidad en ℝⁿ</p>
         </div>
-
         <div class="grid grid-2">
           <div class="card card--blue">
             <h3>Función Vectorial Real</h3>
             <p>Asigna a cada vector del primer espacio un número real en el segundo. El <strong>dominio</strong> es el conjunto de vectores para los cuales existe un número real en el segundo espacio.</p>
             <div class="formula">Dom f = &#123; (x, y) ∈ ℝ² / condición &#125;</div>
           </div>
-
           <div class="card card--teal">
             <h3>Curvas de Nivel</h3>
             <p>Se obtienen al intersectar la superficie <em>Z = f(x,y)</em> con planos paralelos al plano XoY (Z = k) y proyectarlas sobre dicho plano.</p>
             <div class="formula">C<sub>k</sub> = &#123; (x,y) ∈ Dom f / f(x,y) = k &#125;</div>
           </div>
         </div>
-
         <div class="card card--wide card--dark mt">
           <h3>Límite de una función de dos variables</h3>
           <div class="formula formula--large">lim<sub>(x,y)→(x₀,y₀)</sub> f(x,y) = L</div>
@@ -79,7 +329,6 @@
             <strong>Clasificación:</strong> Si el límite no existe → discontinuidad esencial. Si existe pero ≠ f(x₀,y₀) → discontinuidad evitable. Si existe e = f(x₀,y₀) → función continua.
           </div>
         </div>
-
         <div class="grid grid-2 mt">
           <div class="card card--glass">
             <h3>Continuidad</h3>
@@ -96,7 +345,6 @@
       </div>
     </section>
 
-    <!-- ═══ 2. DERIVADAS DIRECCIONALES Y GRADIENTE ═══════════════════════ -->
     <section id="gradiente" class="section section--even">
       <div class="section-num">02</div>
       <div class="container">
@@ -104,18 +352,11 @@
           <h2 class="section-title">Derivadas Direccionales &amp; Gradiente</h2>
           <p class="section-lead">Jacobiano, diferencial, máximo crecimiento</p>
         </div>
-
         <div class="card card--wide card--dark">
           <h3>Derivada Total — Matriz Jacobiana</h3>
           <p>Se obtiene derivando cada función del segundo espacio respecto a cada variable del primero.</p>
-          <div class="formula formula--large">
-            f'(X) = J = <span class="matrix">
-              [ ∂f₁/∂x  ∂f₁/∂y ]<br>
-              [ ∂f₂/∂x  ∂f₂/∂y ]
-            </span>
-          </div>
+          <div class="formula formula--large">f'(X) = J = [ ∂f₁/∂x  ∂f₁/∂y ] / [ ∂f₂/∂x  ∂f₂/∂y ]</div>
         </div>
-
         <div class="grid grid-2 mt">
           <div class="card card--blue">
             <h3>Diferencial de una Función</h3>
@@ -128,19 +369,15 @@
             <div class="formula">Δf = f(X₀ + ΔX) − f(X₀)</div>
           </div>
         </div>
-
         <div class="card card--wide card--glass mt">
           <h3>Derivada Direccional</h3>
           <p>Pendiente de la recta tangente a una curva generada al cortar la superficie con un plano que contenga al vector <em>v̂</em> (versor unitario).</p>
           <div class="formula formula--large">df/dv̂ = f'(X₀) · v̂ = ∇f(X₀) · v̂ &nbsp;&nbsp;&nbsp; donde v̂ = v / |v|</div>
-          <div class="alert alert--tip">
-            <strong>Procedimiento:</strong> Evaluar el Jacobiano de la función en el punto y multiplicar por el versor v̂.
-          </div>
+          <div class="alert alert--tip mt-sm"><strong>Procedimiento:</strong> Evaluar el Jacobiano de la función en el punto y multiplicar por el versor v̂.</div>
         </div>
-
         <div class="card card--wide card--accent mt">
           <h3>⭐ Vector Gradiente — Dirección del Máximo Crecimiento</h3>
-          <div class="formula formula--large formula--white">∇f(X₀) = f'(X₀) = ( f<sub>x</sub>(x,y) , f<sub>y</sub>(x,y) )</div>
+          <div class="formula formula--large formula--white mt-sm">∇f(X₀) = f'(X₀) = ( f<sub>x</sub>(x,y) , f<sub>y</sub>(x,y) )</div>
           <div class="grid grid-2 mt-sm">
             <div class="fact-row"><span class="fact-icon">↑</span><div><strong>Máximo crecimiento:</strong> dirección ∇f(X₀)</div></div>
             <div class="fact-row"><span class="fact-icon">↓</span><div><strong>Mínimo crecimiento:</strong> dirección −∇f(X₀)</div></div>
@@ -148,9 +385,8 @@
             <div class="fact-row"><span class="fact-icon">−</span><div><strong>Deriv. dir. mínima:</strong> −|∇f(X₀)|</div></div>
             <div class="fact-row span-2"><span class="fact-icon">⊥</span><div>El gradiente es <strong>ortogonal</strong> a la curva de nivel en ese punto.</div></div>
           </div>
-          <div class="formula mt-sm">|∇f(X₀) · â| ≤ |∇f(X₀)| · |â|  &nbsp;→&nbsp;  df/dâ ≤ |∇f(X₀)|</div>
+          <div class="formula mt-sm">|∇f(X₀) · â| ≤ |∇f(X₀)| · |â| → df/dâ ≤ |∇f(X₀)|</div>
         </div>
-
         <div class="card card--glass mt">
           <h3>Diferenciabilidad</h3>
           <p>f es diferenciable en X₀ si existe una función afín A(x) tal que f(X₀) = A(X₀) y [f(X₀) − A(X₀)] tiende a cero más rápido que (X − X₀).</p>
@@ -159,7 +395,6 @@
       </div>
     </section>
 
-    <!-- ═══ 3. EXTREMOS RELATIVOS ════════════════════════════════════════ -->
     <section id="extremos" class="section section--odd">
       <div class="section-num">03</div>
       <div class="container">
@@ -167,7 +402,6 @@
           <h2 class="section-title">Extremos Relativos &amp; Plano Tangente</h2>
           <p class="section-lead">Puntos críticos, Hessiano, Taylor y Lagrange</p>
         </div>
-
         <div class="grid grid-2">
           <div class="card card--blue">
             <h3>Mínimo Local</h3>
@@ -180,7 +414,6 @@
             <div class="formula">∀ X ∈ ℝⁿ &nbsp; f(X) ≤ f(X₀)</div>
           </div>
         </div>
-
         <div class="card card--wide card--dark mt">
           <h3>Condición Necesaria — Existencia de Puntos Críticos</h3>
           <p>X₀ es un punto crítico si alguna de estas condiciones se cumple:</p>
@@ -190,7 +423,6 @@
           </div>
           <div class="alert alert--info mt-sm">Si f es diferenciable y ∇f(X) = 0̄ → todas las derivadas direccionales son cero → plano tangente <strong>horizontal</strong> en el PC.</div>
         </div>
-
         <div class="card card--wide card--glass mt">
           <h3>Condición Suficiente — Determinante Hessiano Δ</h3>
           <div class="formula formula--large">Δ = f<sub>xx</sub>·f<sub>yy</sub> − (f<sub>xy</sub>)²</div>
@@ -201,7 +433,6 @@
             <div class="h-row h-row--gray"><span class="h-cond">Δ = 0</span><span class="h-result">No se puede asegurar nada</span></div>
           </div>
         </div>
-
         <div class="card card--wide card--blue mt">
           <h3>Polinomio de Taylor — Análisis del signo de d²f</h3>
           <div class="formula formula--large">f(X) ≈ f(X₀) + [f<sub>x</sub>ΔX + f<sub>y</sub>ΔY] + ½[f<sub>xx</sub>(ΔX)² + 2f<sub>xy</sub>ΔXΔY + f<sub>yy</sub>(ΔY)²]</div>
@@ -213,7 +444,6 @@
             </div>
           </div>
         </div>
-
         <div class="card card--wide card--accent mt">
           <h3>⭐ Extremos Condicionados — Multiplicadores de Lagrange</h3>
           <p>Optimización con restricciones. Se construye la función auxiliar:</p>
@@ -230,7 +460,6 @@
       </div>
     </section>
 
-    <!-- ═══ 4. FUNCIONES PARAMÉTRICAS / CURVAS ═══════════════════════════ -->
     <section id="curvas" class="section section--even">
       <div class="section-num">04</div>
       <div class="container">
@@ -238,27 +467,24 @@
           <h2 class="section-title">Funciones Paramétricas &amp; Curvas</h2>
           <p class="section-lead">ℝ → ℝᵐ, trayectorias, velocidad y aceleración</p>
         </div>
-
         <div class="card card--wide card--dark">
           <h3>Función Vectorial de Variable Real</h3>
           <p>Función cuyo <strong>dominio</strong> es ℝ y cuya <strong>imagen</strong> es un conjunto de vectores. El parámetro <em>t</em> indica tiempo → la curva indica una trayectoria.</p>
           <div class="formula formula--large">g : ℝ → ℝᵐ &nbsp;&nbsp; g(t) = ( g₁(t), g₂(t), ..., gₘ(t) )</div>
           <div class="alert alert--info mt-sm">Solo se grafica la <strong>imagen</strong> (curvas en plano o espacio, NO superficies).</div>
         </div>
-
         <div class="grid grid-2 mt">
           <div class="card card--blue">
-            <h3>Curvas en el Plano  ℝ → ℝ²</h3>
-            <div class="formula">x = g₁(t)<br>y = g₂(t) &nbsp;→&nbsp; g(t) = (g₁(t), g₂(t))</div>
+            <h3>Curvas en el Plano ℝ → ℝ²</h3>
+            <div class="formula">x = g₁(t)<br>y = g₂(t) → g(t) = (g₁(t), g₂(t))</div>
             <p class="mt-sm"><strong>Circunferencia:</strong> g(t) = (r·cos t, r·sen t)<br><strong>Elipse:</strong> x = a·cos t, y = b·sen t</p>
           </div>
           <div class="card card--teal">
-            <h3>Curvas en el Espacio  ℝ → ℝ³</h3>
+            <h3>Curvas en el Espacio ℝ → ℝ³</h3>
             <div class="formula">g(t) = ( g₁(t), g₂(t), g₃(t) )</div>
             <p class="mt-sm">El gráfico de la imagen representa una curva en el espacio xyz.</p>
           </div>
         </div>
-
         <div class="grid grid-2 mt">
           <div class="card card--glass">
             <h3>Límite y Continuidad</h3>
@@ -271,7 +497,6 @@
             <p class="mt-sm">g'(t) = vector tangente a la curva = <strong>vector velocidad</strong> V(t)</p>
           </div>
         </div>
-
         <div class="card card--wide card--accent mt">
           <h3>⭐ Recta Tangente a una Trayectoria</h3>
           <div class="formula formula--white formula--large">r(t) = g(t₀) + t · g'(t₀)</div>
@@ -280,7 +505,6 @@
             <div class="mini-card mini-card--dark"><strong>g'(t₀)</strong> = vector director (tangente / velocidad)</div>
           </div>
         </div>
-
         <div class="card card--wide card--dark mt">
           <h3>Velocidad y Aceleración Vectorial</h3>
           <div class="grid grid-2 mt-sm">
@@ -299,7 +523,6 @@
             </div>
           </div>
         </div>
-
         <div class="card card--wide card--glass mt">
           <h3>Longitud de Curva (Arco)</h3>
           <div class="formula formula--large">L<sub>c</sub> = ∫<sub>a</sub><sup>b</sup> |g'(t)| dt</div>
@@ -308,7 +531,6 @@
       </div>
     </section>
 
-    <!-- ═══ 5. CAMPOS VECTORIALES E INTEGRALES DE LÍNEA ══════════════════ -->
     <section id="campos" class="section section--odd">
       <div class="section-num">05</div>
       <div class="container">
@@ -316,33 +538,26 @@
           <h2 class="section-title">Campos Vectoriales &amp; Integrales de Línea</h2>
           <p class="section-lead">Conservativos, potencial, trabajo, rotacional y divergencia</p>
         </div>
-
         <div class="card card--wide card--dark">
-          <h3>Campo Vectorial  F : ℝⁿ → ℝⁿ  (n = m, n∧m ≠ 1)</h3>
+          <h3>Campo Vectorial F : ℝⁿ → ℝⁿ</h3>
           <p>Representación gráfica mediante <strong>flechas</strong>: origen en punto del dominio, extremo en punto de la imagen.</p>
           <div class="grid grid-2 mt-sm">
             <div class="formula">F : ℝ² → ℝ² &nbsp; F(x,y) = (M, N)</div>
             <div class="formula">F : ℝ³ → ℝ³ &nbsp; F(x,y,z) = (M, N, P)</div>
           </div>
         </div>
-
         <div class="card card--wide card--accent mt">
           <h3>⭐ Campos Conservativos</h3>
           <p>Un campo F(x,y) = (M,N) es <strong>conservativo</strong> si las derivadas cruzadas son iguales:</p>
           <div class="formula formula--white formula--large mt-sm">∂N/∂x = ∂M/∂y</div>
           <div class="grid grid-2 mt-sm">
-            <div class="mini-card mini-card--dark">
-              <strong>Definición alternativa:</strong> F es conservativo si existe f diferenciable tal que F = ∇f. Esta f se llama <em>función potencial</em>.
-            </div>
-            <div class="mini-card mini-card--dark">
-              <strong>En ℝ³:</strong> se verifica calculando el rotacional. Si rot(F) = 0̄ → campo conservativo.
-            </div>
+            <div class="mini-card mini-card--dark"><strong>Definición alternativa:</strong> F es conservativo si existe f diferenciable tal que F = ∇f. Esta f se llama <em>función potencial</em>.</div>
+            <div class="mini-card mini-card--dark"><strong>En ℝ³:</strong> se verifica calculando el rotacional. Si rot(F) = 0̄ → campo conservativo.</div>
           </div>
         </div>
-
         <div class="card card--wide card--blue mt">
           <h3>Función Potencial — Cálculo</h3>
-          <div class="formula">M = ∂f/∂x  →  f = ∫M dx = f = ∫N dy  ←  N = ∂f/∂y</div>
+          <div class="formula">M = ∂f/∂x → f = ∫M dx = f = ∫N dy ← N = ∂f/∂y</div>
           <div class="steps-list mt-sm">
             <div class="step"><span>1</span><p>Integrar M respecto a x → obtener f(x,y) + φ(y)</p></div>
             <div class="step"><span>2</span><p>Derivar respecto a y e igualar a N → despejar φ'(y)</p></div>
@@ -350,7 +565,6 @@
           </div>
           <div class="alert alert--tip mt-sm">f(x,y) se forma reuniendo lo que se repite en ambas integrales, luego lo que no se repite.</div>
         </div>
-
         <div class="card card--wide card--teal mt">
           <h3>Integral de Línea en un Campo Vectorial — Trabajo</h3>
           <p>Calcula el trabajo para desplazar una partícula por la curva γ de a hasta b en el campo F.</p>
@@ -364,22 +578,20 @@
             <div class="mini-card">También: W = ∫<sub>γ</sub> M dx + N dy</div>
           </div>
         </div>
-
         <div class="card card--wide card--glass mt">
           <h3>Teorema Fundamental de las Integrales de Línea</h3>
           <p>En campo conservativo el trabajo <strong>no depende de la trayectoria</strong>:</p>
           <div class="formula formula--large">W<sub>T</sub> = f[x(b), y(b)] − f[x(a), y(a)] = f(b) − f(a)</div>
           <div class="alert alert--info mt-sm">Si C es curva <strong>cerrada</strong> y el campo es conservativo → W<sub>T</sub> = 0</div>
         </div>
-
         <div class="grid grid-2 mt">
           <div class="card card--dark">
-            <h3>Rotacional  (rot F)</h3>
-            <div class="formula">rot(F) = ∇ × F = det | i  j  k  |<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|∂/∂x ∂/∂y ∂/∂z|<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| M    N    P  |</div>
+            <h3>Rotacional (rot F)</h3>
+            <div class="formula">rot(F) = ∇ × F<br>= (∂P/∂y−∂N/∂z)i − (∂P/∂x−∂M/∂z)j + (∂N/∂x−∂M/∂y)k</div>
             <div class="alert alert--tip mt-sm">rot F = 0 → campo conservativo (en ℝ³)</div>
           </div>
           <div class="card card--dark">
-            <h3>Divergencia  (div F)</h3>
+            <h3>Divergencia (div F)</h3>
             <div class="formula">div F(x,y) = ∂M/∂x + ∂N/∂y</div>
             <div class="formula mt-sm">div F(x,y,z) = ∂M/∂x + ∂N/∂y + ∂P/∂z</div>
             <p class="mt-sm">Función <strong>escalar</strong> (a diferencia del rotacional que es vectorial).</p>
@@ -388,7 +600,6 @@
       </div>
     </section>
 
-    <!-- ═══ 6. TEOREMA DE GREEN ═══════════════════════════════════════════ -->
     <section id="green" class="section section--even">
       <div class="section-num">06</div>
       <div class="container">
@@ -396,14 +607,12 @@
           <h2 class="section-title">Teorema de Green</h2>
           <p class="section-lead">Relación entre integral de línea y rotacional sobre una región plana</p>
         </div>
-
         <div class="card card--wide card--accent">
           <h3>⭐ Enunciado</h3>
           <p>Sea R una región del plano simple cuyo borde es una curva cerrada C, suave a trozos, orientada en <strong>sentido antihorario</strong>, y si M y N tienen derivadas parciales continuas en una región abierta que contiene a R, se cumple:</p>
           <div class="formula formula--white formula--xl mt-sm">∮<sub>C</sub> M dx + N dy = ∬<sub>R</sub> (∂N/∂x − ∂M/∂y) dA</div>
           <div class="alert alert--info mt-sm">El término (∂N/∂x − ∂M/∂y) es el <strong>rotacional</strong> del campo F = (M,N).</div>
         </div>
-
         <div class="card card--wide card--dark mt">
           <h3>Tres casos según el valor del Rotacional</h3>
           <div class="green-cases mt-sm">
@@ -421,24 +630,19 @@
             </div>
           </div>
         </div>
-
         <div class="card card--wide card--glass mt">
           <h3>Rotacional en ℝ³</h3>
-          <div class="formula formula--large">rot(F) = ∇ × F = i(∂P/∂y − ∂N/∂z) − j(∂P/∂x − ∂M/∂z) + k(∂N/∂x − ∂M/∂y)</div>
+          <div class="formula formula--large">rot(F) = i(∂P/∂y − ∂N/∂z) − j(∂P/∂x − ∂M/∂z) + k(∂N/∂x − ∂M/∂y)</div>
           <div class="alert alert--tip mt-sm">Si rot F = 0 en todo el espacio → F es conservativo si y solo si el dominio es todo ℝ³.</div>
         </div>
-
         <div class="card card--wide card--blue mt">
           <h3>Interpretación</h3>
           <p>El Teorema de Green dice que la <em>circulación antihoraria</em> de un campo vectorial alrededor de una curva cerrada simple es igual a la <em>integral doble del rotacional</em> del campo sobre la región encerrada por la curva.</p>
-          <div class="alert alert--info mt-sm">
-            <strong>Resumen de gráficas:</strong> Funciones reales → superficies · Funciones paramétricas → curvas · Funciones de campo → flechas
-          </div>
+          <div class="alert alert--info mt-sm"><strong>Resumen de gráficas:</strong> Funciones reales → superficies · Funciones paramétricas → curvas · Funciones de campo → flechas</div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ 7. INTEGRALES MÚLTIPLES ═══════════════════════════════════════ -->
     <section id="integrales" class="section section--odd">
       <div class="section-num">07</div>
       <div class="container">
@@ -446,20 +650,17 @@
           <h2 class="section-title">Integrales Múltiples</h2>
           <p class="section-lead">Dobles, regiones, cálculo de áreas y volúmenes</p>
         </div>
-
         <div class="card card--wide card--dark">
-          <h3>Integral Doble  f : ℝ² → ℝ</h3>
+          <h3>Integral Doble f : ℝ² → ℝ</h3>
           <p>Se utiliza para calcular <strong>áreas o volúmenes</strong>. Se divide el dominio D en pequeños cuadrados ΔxΔy y se proyectan hacia la superficie.</p>
           <div class="formula formula--large">V = ∬<sub>D</sub> f(x,y) dx dy &nbsp;&nbsp; (D = dominio de integración)</div>
           <div class="formula mt-sm">∬<sub>D</sub> f(x,y) dxdy = lim<sub>Δx→0, Δy→0</sub> Σ f(xᵢ,yᵢ) ΔxᵢΔyᵢ</div>
         </div>
-
         <div class="card card--wide card--glass mt">
           <h3>Regiones Rectangulares</h3>
           <p>Los límites son constantes. Se puede integrar en cualquier orden (Teorema de Fubini):</p>
           <div class="formula formula--large mt-sm">V = ∫<sub>a</sub><sup>b</sup> ∫<sub>c</sub><sup>d</sup> F(x,y) dy dx = ∫<sub>c</sub><sup>d</sup> ∫<sub>a</sub><sup>b</sup> F(x,y) dx dy</div>
         </div>
-
         <div class="card card--wide card--accent mt">
           <h3>⭐ Regiones No Rectangulares — Teorema de Fubini</h3>
           <div class="grid grid-2 mt-sm">
@@ -476,9 +677,8 @@
               <div class="formula formula--white mt-sm">V = ∫<sub>c</sub><sup>d</sup> ∫<sub>h₁(y)</sub><sup>h₂(y)</sup> f(x,y) dx dy</div>
             </div>
           </div>
-          <div class="alert mt-sm"><strong>Clave:</strong> al armar los límites, se debe siempre entrar por una función y salir por otra. Se aplica trazando líneas horizontales o verticales sobre la región.</div>
+          <div class="alert mt-sm"><strong>Clave:</strong> al armar los límites, siempre entrar por una función y salir por otra. Se aplica trazando líneas horizontales o verticales sobre la región.</div>
         </div>
-
         <div class="grid grid-2 mt">
           <div class="card card--blue">
             <h3>Cálculo de Área</h3>
@@ -491,7 +691,6 @@
             <div class="formula mt-sm">V = ∬<sub>D</sub> f(x,y) dA</div>
           </div>
         </div>
-
         <div class="card card--wide card--dark mt">
           <h3>Propiedades de la Integral Doble</h3>
           <div class="grid grid-2 mt-sm">
@@ -507,7 +706,6 @@
 
   </main>
 
-  <!-- ═══ FOOTER ══════════════════════════════════════════════════════════ -->
   <footer class="footer">
     <div class="container">
       <p class="footer-text">Análisis Matemático II · Resumen de Teoría</p>
@@ -516,29 +714,17 @@
   </footer>
 
   <script>
-    // Intersection observer for fade-in animations
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-        }
-      });
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
-
     document.querySelectorAll('.card, .section-header, .green-case, .step, .h-row, .region-card')
       .forEach(el => observer.observe(el));
-
-    // Active nav link
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.hero-nav a');
     window.addEventListener('scroll', () => {
       let current = '';
-      sections.forEach(s => {
-        if (window.scrollY >= s.offsetTop - 120) current = s.id;
-      });
-      navLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+      navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
     });
   </script>
 </body>
